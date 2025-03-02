@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="main" id="main">
+    <h2>Upload File</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Folder Path (Nested allowed, e.g., "main_folder/sub_folder")</label>
+    <input type="text" name="folder_path" class="form-control" required>
+    <label>Choose PDF:</label>
+    <input type="file" name="file" accept=".pdf" class="form-control" required>
+    <button type="submit" class="btn btn-primary mt-2">Upload</button>
+  </form>
+  </div>
+{% endblock %}

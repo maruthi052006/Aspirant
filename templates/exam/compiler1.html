@@ -1,0 +1,32 @@
+<div class="col-md-5 text-white p-3">
+    <h2 class="text-dark">Code Compiler</h2>
+    <form method="post" action="{% url 'execute_code' %}" class="mb-3 p-3 rounded-3" style="background-color: rgb(170, 170, 170);">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="language" class="form-label">Language</label>
+            <select id="language" name="language" class="form-select">
+                <option value="python">Python</option>
+                <option value="c">C</option>
+                <option value="cpp">C++</option>
+                <option value="java">Java</option>
+                <option value="php">PHP</option>
+                <option value="javascript">JavaScript</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="code" class="form-label">Code</label>
+            <textarea id="code" name="code" class="form-control" rows="6"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="input" class="form-label">Input</label>
+            <textarea id="input" name="input" class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Run Code</button>
+    </form>
+    {% if output %}
+    <div class="mt-3 p-2 bg-dark text-white rounded">
+        <h5>Output:</h5>
+        <pre>{{ output }}</pre>
+    </div>
+    {% endif %}
+</div>

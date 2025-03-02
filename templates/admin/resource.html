@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main" id="main">
+    <div class="container mt-5">
+        <h2 class="mb-4">Available PDFs</h2>
+        <div class="list-group">
+            {% for pdf in pdf_files %}
+                <a href="{{ pdf.file.url }}" target="_blank" class="list-group-item list-group-item-action">
+                    📂 {{ pdf.folder_path }}/{{ pdf.file.name }}
+                </a>
+            {% empty %}
+                <p>No PDFs available.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

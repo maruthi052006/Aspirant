@@ -1,0 +1,35 @@
+{% extends 'exam/exam_base.html' %}
+{% block content %}
+<div class="main" id="main">
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center text-success">Exam Results - {{ course.course_name }}</h2>
+        <h4 class="text-center">Your Score: <span class="text-primary">{{ obtained_marks }}</span></h4>
+
+        <hr>
+
+        {% if correct_answers %}
+        <h3 class="text-success">✅ Correct Answers</h3>
+        <ul>
+            {% for answer in correct_answers %}
+            <li>{{ answer|safe }}<br><br></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if incorrect_answers %}
+        <h3 class="text-danger">❌ Incorrect Answers</h3>
+        <ul>
+            {% for answer in incorrect_answers %}
+            <li>{{ answer|safe }}<br><br></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a href="{% url 'profile_update' user.id %}" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

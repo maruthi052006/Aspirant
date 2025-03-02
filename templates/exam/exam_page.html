@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) {
+                    document.getElementById('examForm').submit();
+                }
+            }, 1000);
+        }
+        window.onload = function () {
+            var duration = 60 * 60;
+            var display = document.querySelector('#time');
+            startTimer(duration, display);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h3>{{ course.course_name }}</h3>
+        <div class="row">
+            <div class="col-md-8">
+                <form method="post" id="examForm" action="{% url 'exam:submit_exam' course.id %}">
+                    {% csrf_token %}
+                    {% for question in questions %}
+                    <div class="mb-4">
+                        <p><strong>Q{{ forloop.counter }}: {{ question.question }}</strong></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ question.id }}" value="Option1">
+                            <label class="form-check-label">{{ question.option1 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ question.id }}" value="Option2">
+                            <label class="form-check-label">{{ question.option2 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ question.id }}" value="Option3">
+                            <label class="form-check-label">{{ question.option3 }}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ question.id }}" value="Option4">
+                            <label class="form-check-label">{{ question.option4 }}</label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Submit Exam</button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Time Left: <span id="time"></span></div>
+                    <div class="card-body">
+                        <div class="grid-container">
+                            {% for question in questions %}
+                                <button class="btn btn-sm btn-outline-success m-1">{{ forloop.counter }}</button>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-warning mt-2">Mark for Review</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

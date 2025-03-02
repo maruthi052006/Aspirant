@@ -1,0 +1,10 @@
+{% for teacher in pending_teachers %}
+    <p>{{ teacher.user.first_name }} - {{ teacher.email }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="teacher_id" value="{{ teacher.id }}">
+        <button type="submit">Approve</button>
+    </form>
+{% empty %}
+    <p>No pending approvals.</p>
+{% endfor %}
