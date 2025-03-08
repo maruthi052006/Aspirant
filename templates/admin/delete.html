@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main" id="main">
+    <h2>Delete Folder</h2>
+    <p>Are you sure you want to delete the folder <b>{{ file.folder_path }}</b>?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>
+{% endblock %}

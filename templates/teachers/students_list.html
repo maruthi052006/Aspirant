@@ -1,0 +1,89 @@
+{% extends 'teachers/teacher_base.html' %}
+{% block content %}
+{% load static %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Students List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Students</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Student DataTable</h5>
+                        <p>List of all students registered in the system.</p>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Reg No</th>
+                                    <th>Department</th>
+                                    <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td><a href="{% url 'view_profile' student.user.id %}">{{ student.first_name }} {{ student.last_name }}</a></td>
+                                    <td>{{ student.username }}</td>
+                                    <td>{{ student.email }}</td>
+                                    <td>{{ student.ph_no }}</td>
+                                    <td>{{ student.reg_no }}</td>
+                                    <td>{{ student.dep }}</td>
+                                    <td>{{ student.year }}</td>
+                                </tr>
+                                
+                                
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% for clg_name, syllabus in syllabus_data.items %}
+    <h3>{{ clg_name }}</h3>
+    <div class="activity">
+        {% for item in syllabus %}
+        <div class="activity-item d-flex">
+            <div class="activite-label">Day {{ item.day }}</div>
+            <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+            <div class="activity-content">
+                <strong>Topic:</strong> {{ item.topic }}<br>
+                <strong>Trainer:</strong> {{ item.trainer_name }}
+            </div>
+        </div>
+        {% empty %}
+        <p>No syllabus added yet.</p>
+        {% endfor %}
+    </div>
+    <hr>
+    {% endfor %}
+
+</main>
+<!-- Include Simple DataTables JS & CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        new simpleDatatables.DataTable(".datatable");
+    });
+</script>
+
+{% endblock content %}

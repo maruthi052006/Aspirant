@@ -1,0 +1,31 @@
+{% extends 'trainers/trainer_base.html' %}
+{% block content %}
+<div class="main" id="main">
+    <div class="container mt-4">
+        <h2 class="text-primary text-center">Welcome, {{ trainer.first_name }}</h2>
+
+        <div class="row">
+            {% for pdf in pdfs %}
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                    <div class="card shadow-sm h-100 {% if pdf.is_expired %}border-danger{% endif %}">
+                        <div class="card-body d-flex flex-column align-items-center text-center">
+                            <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" 
+                                 alt="PDF Icon" class="img-fluid mb-2" style="width: 50px;">
+                            <h6 class="card-title text-truncate w-100" title="{{ pdf.pdf.name }}">{{ pdf.pdf.name }}</h6>
+                            <p class="text-muted small">Uploaded: {{ pdf.created_at|date:"Y-m-d H:i" }}</p>
+                            
+                            {% if pdf.is_expired %}
+                                <span class="badge bg-danger">Expired</span>
+                            {% else %}
+                                <a href="{% url 'view_pdf' pdf.id %}" target="_blank" class="btn btn-primary btn-sm mt-auto">View</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted">No PDFs uploaded yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

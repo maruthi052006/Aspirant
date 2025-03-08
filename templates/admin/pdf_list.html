@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses</title>
+</head>
+<body>
+    <h1>Courses</h1>
+    <ul>
+        {% for course in courses %}
+            <li><a href="{% url 'pdf_list' course.id %}">{{ course.course_name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+

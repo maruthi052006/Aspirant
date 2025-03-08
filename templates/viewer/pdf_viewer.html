@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure PDF Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin-top: 10px;
+        }
+        @media print {
+            body { display: none !important; }
+        }
+    </style>
+    <script>
+        // Disable Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Disable Print Screen
+        document.addEventListener("keyup", function (e) {
+            if (e.key === "PrintScreen") {
+                alert("Screenshots are disabled!");
+                navigator.clipboard.writeText("");
+            }
+        });
+
+        // PDF Viewer
+        document.addEventListener("DOMContentLoaded", function () {
+            var url = "{{ file_url }}";
+            var loadingTask = pdfjsLib.getDocument(url);
+            var canvas = document.getElementById("pdfCanvas");
+            var ctx = canvas.getContext("2d");
+            var currentPage = 1;
+            var pdfDoc = null;
+
+            function renderPage(num) {
+                pdfDoc.getPage(num).then(function (page) {
+                    var viewport = page.getViewport({ scale: 1.5 });
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    var renderContext = { canvasContext: ctx, viewport: viewport };
+                    page.render(renderContext);
+                    document.getElementById("pageNumber").innerText = "Page " + num + " / " + pdfDoc.numPages;
+                });
+            }
+
+            loadingTask.promise.then(function (pdf) {
+                pdfDoc = pdf;
+                renderPage(currentPage);
+            });
+
+            window.nextPage = function () {
+                if (currentPage < pdfDoc.numPages) {
+                    currentPage++;
+                    renderPage(currentPage);
+                }
+            };
+
+            window.prevPage = function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderPage(currentPage);
+                }
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1>Secure PDF Viewer</h1>
+    <canvas id="pdfCanvas"></canvas>
+    <br>
+    <button onclick="prevPage()">Previous</button>
+    <button onclick="nextPage()">Next</button>
+    <p id="pageNumber">Page 1</p>
+</body>
+</html>

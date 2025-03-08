@@ -1,0 +1,125 @@
+{% extends 'exam/exam_base.html' %}
+{% block content %}
+{% load static %}
+<div class="main" id="main">
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+      <h2 class="text-center mb-4 text-primary">Exam for {{ course.course_name }}</h2>
+      <h4 class="text-center text-danger">Time Left: <span id="timer">20:00</span></h4>
+      <form method="post" id="examForm">
+        {% csrf_token %}
+        {% for question in questions %}
+        <div class="mb-4">
+          <h4 class="mb-3">Q{{ forloop.counter }}. {{ question.question }}</h4>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="Option1"
+              id="option1_{{ question.id }}">
+            <label class="form-check-label" for="option1_{{ question.id }}">{{ question.option1 }}</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="Option2"
+              id="option2_{{ question.id }}">
+            <label class="form-check-label" for="option2_{{ question.id }}">{{ question.option2 }}</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="Option3"
+              id="option3_{{ question.id }}">
+            <label class="form-check-label" for="option3_{{ question.id }}">{{ question.option3 }}</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="Option4"
+              id="option4_{{ question.id }}">
+            <label class="form-check-label" for="option4_{{ question.id }}">{{ question.option4 }}</label>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-danger text-center">No questions available for this course.</p>
+        {% endfor %}
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-lg mt-3">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript for Timer, Refresh Prevention, & Auto-Submit -->
+<script>
+let formSubmitted = false;
+let warningCount = 0;
+let timeLeft = 20 * 60; // 20 minutes in seconds
+
+function giveWarning() {
+  warningCount++;
+  if (warningCount >= 2) {
+    alert("You violated the rules multiple times! Your test is being submitted automatically.");
+    document.getElementById("examForm").submit(); // Auto-submit form
+  } else {
+    alert("Warning: You are not allowed to leave or refresh during the test! (" + warningCount + "/2)");
+  }
+}
+
+// Timer Function
+function startTimer() {
+  let timerDisplay = document.getElementById("timer");
+  let timerInterval = setInterval(function () {
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      alert("Time is up! Your test is being submitted automatically.");
+      document.getElementById("examForm").submit();
+    } else {
+      let minutes = Math.floor(timeLeft / 60);
+      let seconds = timeLeft % 60;
+      timerDisplay.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+      timeLeft--;
+    }
+  }, 1000);
+}
+
+// Prevent Refresh (F5, Ctrl+R, Cmd+R)
+document.addEventListener("keydown", function (event) {
+  if (event.key === "F5" || (event.ctrlKey && event.key === "r") || (event.metaKey && event.key === "r")) {
+    event.preventDefault();
+    giveWarning();
+  }
+});
+
+// Prevent Page Exit (Stronger Restriction)
+window.addEventListener("beforeunload", function (event) {
+  if (!formSubmitted) {
+    event.preventDefault();
+    event.returnValue = "You cannot leave this page until you submit the test.";
+    return "You cannot leave this page until you submit the test.";
+  }
+});
+
+// Improved Back Button Handling
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+  window.history.pushState(null, null, window.location.href);
+  giveWarning();
+};
+
+// Prevent Right-Click (Optional)
+document.addEventListener("contextmenu", function (event) {
+  event.preventDefault();
+});
+
+// Detect Tab Switching
+document.addEventListener("visibilitychange", function () {
+  if (document.hidden) {
+    giveWarning();
+  }
+});
+
+// Ensure Form Submission Unlocks the Page
+document.getElementById("examForm").addEventListener("submit", function () {
+  formSubmitted = true;
+});
+
+// Start Timer on Page Load
+window.onload = startTimer;
+
+</script>
+
+{% endblock content %}

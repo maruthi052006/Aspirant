@@ -1,0 +1,17 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Our Courses</h2>
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-lg-3 col-md-6 col-12 mb-3">
+            <a href="{% url 'pdf_list' course.id %}">
+                <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                    <h5 class="card-title">{{ course.course_name }}</h5>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

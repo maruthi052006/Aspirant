@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Aspirant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="">
+    <nav class="navbar navbar-expand-md" style="background-color: rgb(92, 114, 133);">
+        <div class="container">
+            <img src="{% static 'img/image.png' %}" alt="Logo" width="80" height="80">
+            <a class="navbar-brand text-white" href="https://www.aspirantiasacademy.in">Aspirant</a>
+        </div>
+    </nav>
+    <br>
+    <div class="container d-flex align-items-center" style="min-height: 100vh;">
+        <div class="container p-4 bg-white rounded shadow-sm w-100" style="max-width: 400px;">
+            <h2 class="text-center mb-3 text-primary">Student Signup</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" name="first_name" class="form-control mb-2" placeholder="First Name" required>
+                <input type="text" name="last_name" class="form-control mb-2" placeholder="Last Name" required>
+                <input type="text" name="reg_no" class="form-control mb-2" placeholder="Register No" required>
+                <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
+                <input type="text" name="ph_no" class="form-control mb-2" placeholder="Phone Number" required>
+                <input type="text" name="class_name" class="form-control mb-2" placeholder="Class Name" required>
+                <select name="dep" class="form-control mb-2" required>
+                    <option value="" disabled selected>---Select Department---</option>
+                    <option value="Artificial Intelligence and Data Science">Artificial Intelligence and Data Science</option>
+                    <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                    <option value="Cyber Security">Cyber Security</option>
+                    <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine Learning</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                    <option value="Very Large Scale Integration">Very Large Scale Integration</option>
+                    <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                </select>
+                <input type="text" name="year" class="form-control mb-2" placeholder="Year" required>
+                <input type="text" name="clg_name" class="form-control mb-2" placeholder="College Name" required>
+                <select name="course" class="form-control mb-2" required>
+                    <option value="" disabled selected>Select Course</option>
+                    <option value="Aptitude">Aptitude</option>
+                    <option value="Technical">Technical</option>
+                    <option value="Reasoning">Reasoning</option>
+                    <option value="Problem Solving">Problem Solving</option>
+                </select>
+                <input type="file" name="profile_pic" class="form-control mb-2">
+                <button type="submit" class="btn btn-primary w-100">Signup</button>
+            </form>
+            <p class="text-center mt-3">Already have an account? <a href="{% url 'login' %}"
+                    class="text-primary">Login</a></p>
+        </div>
+    </div>
+
+    <!-- footer  -->
+     <!-- Footer -->
+    <footer class="text-white py-5" style="background-color: rgb(92, 114, 133);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About Apexa</h5>
+                    <p>Apexa is a tech-based company dedicated to driving innovation through cutting-edge software
+                        solutions and modern digital experiences.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Our Services</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Projects</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Connect With Us</h5>
+                    <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="text-center border-top pt-3 mt-4">
+                <p>&copy; 2024 Apexa. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

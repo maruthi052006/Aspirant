@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Compiler</title>
+
+    <!-- CodeMirror CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/eclipse.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/addon/edit/matchbrackets.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .editor-container, .output-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .editor-container {
+            background: #fff;
+            border-right: 2px solid #ddd;
+        }
+        .output-container {
+            background: #f4f4f4;
+        }
+        h2, h3 {
+            margin-bottom: 10px;
+        }
+        .CodeMirror {
+            flex: 1;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        select, textarea, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #output {
+            flex: 1;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .editor-container {
+                border-right: none;
+                border-bottom: 2px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="editor-container">
+            <h2>Online Compiler</h2>
+            <form id="code-form">
+                {% csrf_token %}
+                <label>Select Language:</label>
+                <select id="language" name="language">
+                    <option value="python">Python</option>
+                    <option value="c">C</option>
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                    <option value="php">PHP</option>
+                    <option value="javascript">JavaScript</option>
+                </select>
+                <label>Enter Code:</label>
+                <textarea id="code" name="code"></textarea>
+                <label>Input (Optional):</label>
+                <textarea id="input" name="input" rows="3"></textarea>
+                <button type="submit">Run Code</button>
+            </form>
+        </div>
+        <div class="output-container">
+            <h3>Output:</h3>
+            <pre id="output"></pre>
+        </div>
+    </div>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            mode: "python",
+            lineNumbers: true,
+            theme: "eclipse",
+            autoCloseBrackets: true,
+            matchBrackets: true,
+        });
+
+        document.getElementById("language").addEventListener("change", function() {
+            var modeMap = {
+                "python": "python",
+                "c": "text/x-csrc",
+                "cpp": "text/x-c++src",
+                "java": "text/x-java",
+                "php": "text/x-php",
+                "javascript": "javascript"
+            };
+            editor.setOption("mode", modeMap[this.value]);
+        });
+
+        document.getElementById("code-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var code = editor.getValue();
+            var language = document.getElementById("language").value;
+            var input = document.getElementById("input").value;
+
+            fetch("{% url 'compiler' %}", {
+                method: "POST",
+                body: new FormData(this),
+                headers: { "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value }
+            })
+            .then(response => response.json())
+            .then(data => { document.getElementById("output").textContent = data.output; })
+            .catch(error => { document.getElementById("output").textContent = "❌ Error executing code."; });
+        });
+    </script>
+</body>
+</html>

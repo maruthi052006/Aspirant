@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Trainer Signup - Aspirant</title>
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md" style="background-color: rgb(92, 114, 133);">
+        <div class="container">
+            <img src="{% static 'img/image.png' %}" alt="Logo" width="80" height="80">
+            <a class="navbar-brand text-white" href="https://www.aspirantiasacademy.in">Aspirant</a>
+        </div>
+    </nav>
+    <br>
+
+    <section class="d-flex align-items-center justify-content-center min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Trainer Signup</h5>
+                            <p class="text-center small">Create an account to continue</p>
+                            <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" name="first_name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" name="last_name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" name="ph_no" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Specialization</label>
+                                    <select class="form-control" name="specialization" required>
+                                        <option value="Aptitude">Aptitude</option>
+                                        <option value="Soft Skill">Soft Skill</option>
+                                        <option value="Technical">Technical</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">College</label>
+                                    <select class="form-control" name="clg">
+                                        {% for college in colleges %}
+                                            <option value="{{ college.id }}">{{ college.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Profile Picture</label>
+                                    <input type="file" class="form-control" name="profile_pic">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                                <div class="text-center mt-3">
+                                    <p class="small">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-white py-5" style="background-color: rgb(92, 114, 133);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About Apexa</h5>
+                    <p>Apexa is a tech-based company dedicated to driving innovation through cutting-edge software
+                        solutions and modern digital experiences.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Our Services</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Projects</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Connect With Us</h5>
+                    <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="text-center border-top pt-3 mt-4">
+                <p>&copy; 2024 Apexa. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>
