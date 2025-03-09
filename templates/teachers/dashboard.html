@@ -161,32 +161,29 @@
                                     <li><a class="dropdown-item" href="#" data-chart="line">Line Chart</a></li>
                                 </ul>
                             </div>
-
+                    
                             <div class="card-body">
-                                <h5 class="card-title">Class-Wise Performance <span>| Attendance</span>
-                                </h5>
+                                <h5 class="card-title">Class-Wise Performance <span>| Attendance</span></h5>
                                 <div id="classComparisonChart"></div>
-
+                    
                                 <script>
                                     document.addEventListener("DOMContentLoaded", () => {
-                                        // Django JSON data
-                                        const attendanceLabels = JSON.parse('{{ class_names|safe }}');
-                                        const attendanceData = JSON.parse('{{ attendance_percentages|safe }}');
-                                        const examLabels = JSON.parse('{{ exam_class_names|safe }}');
-                                        const examData = JSON.parse('{{ exam_avg_marks|safe }}');
-
-                                        // Default: Show Attendance Data
+                                        const attendanceLabels = JSON.parse('{{ class_names|escapejs }}');
+                                        const attendanceData = JSON.parse('{{ attendance_percentages|escapejs }}');
+                                        const examLabels = JSON.parse('{{ exam_class_names|escapejs }}');
+                                        const examData = JSON.parse('{{ exam_avg_marks|escapejs }}');
+                    
                                         let chartType = 'line';
                                         let chartData = {
                                             series: [{ name: "Attendance %", data: attendanceData }],
                                             categories: attendanceLabels
                                         };
-
+                    
                                         let chart;
-
+                    
                                         function renderChart(type) {
                                             if (chart) chart.destroy();
-
+                    
                                             let options = {
                                                 chart: { height: 350, type, toolbar: { show: false } },
                                                 markers: { size: 4 },
@@ -194,19 +191,18 @@
                                                 stroke: { curve: 'smooth', width: 2 },
                                                 xaxis: { categories: chartData.categories }
                                             };
-
+                    
                                             if (type === 'pie') {
                                                 options.series = chartData.series[0].data;
                                                 options.labels = chartData.categories;
                                             } else {
                                                 options.series = chartData.series;
                                             }
-
+                    
                                             chart = new ApexCharts(document.querySelector("#classComparisonChart"), options);
                                             chart.render();
                                         }
-
-                                        // Dropdown Event Listener
+                    
                                         document.querySelectorAll('#examChartSelector a').forEach(item => {
                                             item.addEventListener('click', event => {
                                                 event.preventDefault();
@@ -214,15 +210,14 @@
                                                 renderChart(chartType);
                                             });
                                         });
-
+                    
                                         renderChart(chartType);
                                     });
                                 </script>
                             </div>
                         </div>
-
-
                     </div>
+                    
                     <!-- End Recent Sales -->
 
                     <!-- Top Selling -->
