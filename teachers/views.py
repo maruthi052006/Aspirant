@@ -86,14 +86,19 @@ def approve_teachers(request):
 from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from .models import Teacher, Clg, Syllabus  # Ensure your models are correctly imported
+
+
+import json
+from datetime import date
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Count, Q, Avg
+# from .models import Teacher, Student, Attendance, Result, Clg, Syllabus
 
 @login_required
 def teacher_dashboard(request):
     teacher = get_object_or_404(Teacher, user=request.user)
 
-    # Redirect if teacher is not approved
     if not teacher.is_approved:
         return redirect('teacherlogin')
 
@@ -104,9 +109,8 @@ def teacher_dashboard(request):
         syllabus_data[college.clg_name] = Syllabus.objects.filter(clg=college).order_by("day")
 
     today = date.today()
-    selected_class = request.GET.get('class_name', None)  # Get selected class from request
+    selected_class = request.GET.get('class_name', None)
 
-    # Fetch attendance data
     attendance_query = Student.objects.values('class_name')
     if selected_class:
         attendance_query = attendance_query.filter(class_name=selected_class)
@@ -114,8 +118,8 @@ def teacher_dashboard(request):
     attendance_summary = (
         attendance_query.annotate(
             total_students=Count('id'),
-            present=Count('attendance', filter=Q(attendance__date=today, attendance__status=True)),
-            absent=Count('attendance', filter=Q(attendance__date=today, attendance__status=False)),
+            present=Count('attendance', filter=Q(attendance_date=today, attendance_status=True)),
+            absent=Count('attendance', filter=Q(attendance_date=today, attendance_status=False)),
         )
     )
 
@@ -139,7 +143,7 @@ def teacher_dashboard(request):
         class_names.append(record['class_name'])
         attendance_percentages.append(round(percentage, 2))
 
-    # Fetch exam result data (average marks per class)
+    # Exam results (average marks per class)
     exam_query = Result.objects.values('student__class_name')
     if selected_class:
         exam_query = exam_query.filter(student__class_name=selected_class)
@@ -164,6 +168,7 @@ def teacher_dashboard(request):
     }
 
     return render(request, 'teachers/dashboard.html', context)
+
 
 
 @login_required
@@ -197,6 +202,9 @@ def syllabus_view(request):
 
 
 from datetime import date
+from django.shortcuts import render, get_object_or_404, redirect
+# from .models import Attendance, Student, Teacher
+
 def mark_attendance(request):
     teacher = get_object_or_404(Teacher, user=request.user)  # Get the logged-in teacher
     students = Student.objects.filter(clg_name=teacher.college_name)  # Fetch students from the same college
@@ -211,17 +219,19 @@ def mark_attendance(request):
                 if student:
                     status = True if value.lower() == "present" else False
                     
-                    # Fetch existing record or create a new one
-                    attendance, created = Attendance.objects.get_or_create(
-                        student=student, date=today, defaults={'status': status}
-                    )
-                    if not created:  # If already exists, update status
-                        attendance.status = status
+                    # Check if an attendance record already exists for this student and date
+                    attendance = Attendance.objects.filter(student=student, date=today).first()
+
+                    if attendance:
+                        attendance.status = status  # Update status
                         attendance.save()
+                    else:
+                        Attendance.objects.create(student=student, date=today, status=status)  # Create new record
 
         return redirect('class_wise_attendance')  # Redirect after submission
 
     return render(request, 'admin/mark_attendance.html', {'students': students})
+
 
 from django.shortcuts import render
 from django.db.models import Count, Avg, Q
@@ -240,8 +250,8 @@ def class_wise_attendance(request):
     attendance_summary = (
         attendance_query.annotate(
             total_students=Count('id'),
-            present=Count('attendance', filter=Q(attendance__date=today, attendance__status=True)),
-            absent=Count('attendance', filter=Q(attendance__date=today, attendance__status=False)),
+            present=Count('attendance', filter=Q(attendance_date=today, attendance_status=True)),
+            absent=Count('attendance', filter=Q(attendance_date=today, attendance_status=False)),
         )
     )
 
@@ -293,9 +303,9 @@ def class_wise_attendance(request):
 def exam_performance(request):
     exam_results = (
         Result.objects
-        .values('student__class_name', 'exam__course_name')  # Match your Course model field
+        .values('student_class_name', 'exam_course_name')  # Match your Course model field
         .annotate(avg_marks=Avg('marks'))
-        .order_by('student__class_name', 'exam__course_name')
+        .order_by('student_class_name', 'exam_course_name')
     )
 
     class_data = {}
