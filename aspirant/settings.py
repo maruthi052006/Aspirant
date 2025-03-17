@@ -28,7 +28,7 @@ SECRET_KEY = 'nyha7+bxl%o&^&up&y)flv9rxqhq8cxeu*9yqt=)ju@je-@=)w'
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["147.93.105.244","aspirantplacementwing.com"]
 DEBUG = False
 # ssh root@147.93.105.244", "aspirantplacementwing.com
 
