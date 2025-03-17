@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main" id="main">
+{% if user.is_superuser %}
+    <h2>Upload PDF</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="course">Select Course:</label>
+        <select name="course" required>
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.course_name }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="title">File Title:</label>
+        <input type="text" name="title" placeholder="Enter file title" required>
+    
+        <label for="file">Upload PDF:</label>
+        <input type="file" name="file" accept=".pdf" required>
+    
+        <button type="submit">Upload</button>
+    </form>
+{% else %}
+    <p>You are not authorized to upload files.</p>
+{% endif %}
+</div>
+
+{% endblock %}

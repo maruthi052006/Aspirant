@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .course-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .course-title {
+            font-size: 20px;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+        .pdf-list {
+            list-style: none;
+            padding: 0;
+        }
+        .pdf-item {
+            background: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .pdf-item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .pdf-item a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Uploaded PDF Files</h2>
+
+    <div class="course-container">
+        {% for course in courses %}
+            <div class="course-title">{{ course.course_name }}</div>
+            <ul class="pdf-list">
+                {% for file in course.sourcefile_set.all %}
+                    <li class="pdf-item">
+                        <a href="{% url 'view_pdf' file.id %}" target="_blank">
+                            📄 {{ file.title|default:"Untitled PDF" }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li>No PDFs available for this course.</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Test Results</title>
+</head>
+<body>
+    <h3>Your Exam Results</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Exam</th>
+                <th>Marks</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.exam.course_name }}</td>
+                    <td>{{ result.marks }}</td>
+                    <td>{{ result.date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>

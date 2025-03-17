@@ -1,0 +1,133 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+<div class="main" id="main">
+    <div class="container mt-4">
+        <h2>Central Government</h2>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">UPSC</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">SSC</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">IBPS</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">RRB</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">LIC</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">GIC</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">RBI</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">NDA</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">CDS</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container mt-4">
+        <h2>State Government</h2>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">TNPSC</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">Group 1</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">Group 2</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">Group 2A</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-3">
+                <a href="#">
+                    <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                        <h5 class="card-title">Group 4</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+<hr>
+<div class="container mt-4">
+    <h2>Our Courses</h2>
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-lg-3 col-md-6 col-12 mb-3">
+            <a href="{% url 'course_files' course.course_name %}">
+                <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+                    <h5 class="card-title">{{ course.course_name }}</h5>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

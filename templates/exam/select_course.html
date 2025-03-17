@@ -1,0 +1,21 @@
+{% extends 'exam/exam_base.html' %}
+{% block content %}
+{% load static %}
+<div class="main" id="main">
+    <h2>Select Course and Number of Questions</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="course">Select Course:</label>
+        <select name="course" id="course" class="form-control">
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.course_name }}</option>
+            {% endfor %}
+        </select>
+        <label for="num_questions">Number of Questions:</label>
+        <input type="number" name="num_questions" id="num_questions" class="form-control" required>
+        <button type="submit" class="btn btn-primary mt-3">Start Exam</button>
+        {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+    </form>
+</div>
+
+{% endblock content %}

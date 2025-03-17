@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="main" id="main">
+    <h2>Rename File</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="new_name" class="form-control" placeholder="Enter new name" required>
+    <button type="submit" class="btn btn-success mt-2">Rename</button>
+  </form>
+  </div>
+{% endblock %}

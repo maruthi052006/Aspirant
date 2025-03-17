@@ -1,0 +1,24 @@
+{% extends 'exam/exam_base.html' %}
+{% block content %}
+{% load static %}
+<div class="main" id="main">
+  <div class="container">
+    <h2>Available Courses</h2>
+    <div class="row">
+      {% for course in courses %}
+        <div class="col-lg-3 col-md-6 col-12 mb-3">
+          <div class="card text-center shadow-sm p-3" style="background-color: rgba(196, 230, 242, 0.537);">
+            <h5 class="card-title">{{ course.course_name }}</h5>
+            {% if course.is_approved %}
+              <a href="{% url 'slt_start_exam' course.id %}" class="btn btn-primary mt-2">Start Test</a>
+            {% else %}
+              <a href="" class="btn btn-primary mt-2 disabled">Start Test</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,99 @@
+{% extends 'students/std_base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container-fluid {
+        max-width: 100%;
+        padding: 20px;
+    }
+    h1 {
+        color: #333;
+        text-align: center;
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .file-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 15px;
+    }
+    .file-card {
+        background: white;
+        flex: 1 1 calc(16.66% - 15px);
+        min-width: 150px;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+    }
+    .file-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .file-icon {
+        font-size: 40px;
+        color: #007BFF;
+    }
+    .file-name {
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        word-break: break-word;
+    }
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px 15px;
+        background: #007BFF;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .back-link:hover {
+        background: #0056b3;
+    }
+    @media (max-width: 1200px) {
+        .file-card { flex: 1 1 calc(25% - 15px); }
+    }
+    @media (max-width: 992px) {
+        .file-card { flex: 1 1 calc(33.33% - 15px); }
+    }
+    @media (max-width: 768px) {
+        .file-card { flex: 1 1 calc(50% - 15px); }
+    }
+    @media (max-width: 576px) {
+        .file-card { flex: 1 1 100%; }
+    }
+</style>
+
+<div class="main" id="main">
+    <h1>Files for {{ course.course_name }}</h1>
+    <div class="file-grid">
+        {% for file in pdf_files %}
+            <div class="file-card" onclick="window.location.href='{% url 'pdf_detail' file.id %}'">
+                <div class="file-icon">📄</div>
+                <div class="file-name">{{ file.title }}</div>
+            </div>
+        {% empty %}
+            <p class="text-center">No files available.</p>
+        {% endfor %}
+    </div>
+    {% comment %} <a href="{% url 'student_index' c.user.id %}" class="back-link">Back to Courses</a> {% endcomment %}
+</div>
+
+{% endblock content %}

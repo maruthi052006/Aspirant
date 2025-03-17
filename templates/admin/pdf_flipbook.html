@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<h2>{{ pdf.title }}</h2>
+
+<!-- Flipbook Container -->
+<div id="flipbook-container">
+    <div class="df-lightbox" data-df-config='{"source": "{{ pdf.file.url }}", "type": "pdf"}'></div>
+</div>
+
+<!-- Initialize Flipbook -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        dFlip.init();
+    });
+</script>
+
+<a href="{% url 'view_pdfs' %}">Back to PDFs</a>
+{% endblock content %}

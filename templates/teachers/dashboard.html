@@ -1,0 +1,374 @@
+{% extends 'teachers/teacher_base.html' %}
+{% block content %}
+{% load static %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-8">
+                <div class="row">
+
+                    <!-- Sales Card -->
+                    {% comment %} <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card education-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Trainers Overview</h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-book"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6 id="trainer-count">18</h6>
+                                        <span class="text-success small pt-1 fw-bold">Trainers</span>
+                                        <span class="text-muted small pt-2 ps-1">in total</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                    <!-- End Sales Card -->
+
+                    <!-- Revenue Card -->
+                    {% comment %} <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card education-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Education Overview <span>| This Month</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-book"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>85%</h6>
+                                        <span class="text-success small pt-1 fw-bold">+5%</span>
+                                        <span class="text-muted small pt-2 ps-1">progress this month</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Revenue Card -->
+
+                    <!-- Customers Card -->
+                    <div class="col-xxl-4 col-xl-12">
+                        <div class="card info-card student-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Students Enrolled <span>| This Year</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>1244</h6>
+                                        <span class="text-success small pt-1 fw-bold">+10%</span>
+                                        <span class="text-muted small pt-2 ps-1">growth this year</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Customers Card --> {% endcomment %}
+
+                    <!-- Reports -->
+                    <!-- <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Class-Wise Exam Performance</h5>
+                                <div id="classPerformanceChart"></div>
+                                
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        const chartSeries = JSON.parse('{{ chart_series|safe }}');
+                                        const examLabels = JSON.parse('{{ exam_labels|safe }}');
+                    
+                                        let options = {
+                                            series: chartSeries,
+                                            chart: {
+                                                type: 'bar',
+                                                height: 350,
+                                                stacked: true
+                                            },
+                                            plotOptions: {
+                                                bar: { horizontal: false }
+                                            },
+                                            xaxis: {
+                                                categories: examLabels
+                                            },
+                                            colors: ['#008FFB', '#00E396', '#FF4560', '#775DD0'],
+                                            fill: { opacity: 1 }
+                                        };
+                    
+                                        let chart = new ApexCharts(document.querySelector("#classPerformanceChart"), options);
+                                        chart.render();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div> -->
+                    
+
+                    <!-- End Reports -->
+
+                    <!-- Recent Sales -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="examChartSelector">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Select Chart Type</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#" data-chart="pie">Pie Chart</a></li>
+                                    <li><a class="dropdown-item" href="#" data-chart="bar">Bar Chart</a></li>
+                                    <li><a class="dropdown-item" href="#" data-chart="line">Line Chart</a></li>
+                                </ul>
+                            </div>
+                    
+                            <div class="card-body">
+                                <h5 class="card-title">Class-Wise Performance <span>| Attendance</span></h5>
+                                <div id="classComparisonChart"></div>
+                    
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        const attendanceLabels = JSON.parse('{{ class_names|escapejs }}');
+                                        const attendanceData = JSON.parse('{{ attendance_percentages|escapejs }}');
+                                        const examLabels = JSON.parse('{{ exam_class_names|escapejs }}');
+                                        const examData = JSON.parse('{{ exam_avg_marks|escapejs }}');
+                    
+                                        let chartType = 'line';
+                                        let chartData = {
+                                            series: [{ name: "Attendance %", data: attendanceData }],
+                                            categories: attendanceLabels
+                                        };
+                    
+                                        let chart;
+                    
+                                        function renderChart(type) {
+                                            if (chart) chart.destroy();
+                    
+                                            let options = {
+                                                chart: { height: 350, type, toolbar: { show: false } },
+                                                markers: { size: 4 },
+                                                colors: ['#4154f1', '#ff771d'],
+                                                stroke: { curve: 'smooth', width: 2 },
+                                                xaxis: { categories: chartData.categories }
+                                            };
+                    
+                                            if (type === 'pie') {
+                                                options.series = chartData.series[0].data;
+                                                options.labels = chartData.categories;
+                                            } else {
+                                                options.series = chartData.series;
+                                            }
+                    
+                                            chart = new ApexCharts(document.querySelector("#classComparisonChart"), options);
+                                            chart.render();
+                                        }
+                    
+                                        document.querySelectorAll('#examChartSelector a').forEach(item => {
+                                            item.addEventListener('click', event => {
+                                                event.preventDefault();
+                                                chartType = event.target.getAttribute('data-chart');
+                                                renderChart(chartType);
+                                            });
+                                        });
+                    
+                                        renderChart(chartType);
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- End Recent Sales -->
+
+                    <!-- Top Selling -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul> -->
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Attendance Count <span></span></h5>
+
+                                <!-- Attendance Count Table -->
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Class</th>
+                                            <th scope="col">Total Students</th>
+                                            <th scope="col">Present</th>
+                                            <th scope="col">Absent</th>
+                                            <th scope="col">Attendance %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in attendance_data %}
+                                        <tr>
+                                            <td>{{ data.class_name }}</td>
+                                            <td>{{ data.total_students }}</td>
+                                            <td>{{ data.present }}</td>
+                                            <td>{{ data.absent }}</td>
+                                            <td>{{ data.attendance_percentage }}%</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                <!-- End Attendance Count Table -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Top Selling -->
+
+                </div>
+            </div><!-- End Left side columns -->
+
+            <!-- Right side columns -->
+            <div class="col-lg-4">
+                <!-- Recent Activity -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                            <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                </li>
+                                <li><a class="dropdown-item" href="#">Today</a></li>
+                                <li><a class="dropdown-item" href="#">This Month</a></li>
+                                <li><a class="dropdown-item" href="#">This Year</a></li>
+                            </ul> -->
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">📚 Syllabus Timeline <span class="text-muted"> </span></h5>
+
+                            <div class="activity">
+                                {% for college_name, syllabus_list in syllabus_data.items %}
+                                <div class="college-container">
+                                    <h6 class="college-name fw-bold text-primary">{{ college_name }}</h6>
+
+                                    <div class="syllabus-cards">
+                                        {% for syllabus in syllabus_list %}
+                                        <div class="syllabus-card">
+                                            <div class="syllabus-day">
+                                                <span class="day-number">Day {{ syllabus.day }}</span>
+                                            </div>
+                                            <div class="syllabus-content">
+                                                <h6 class="topic"><i class="bi bi-book"></i> {{ syllabus.topic }}</h6>
+                                                <p class="trainer"><i class="bi bi-person-circle"></i> {{ syllabus.trainer_name }}</p>
+                                            </div>
+                                        </div>
+                                        {% empty %}
+                                        <p class="text-center">No syllabus data available.</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <p class="text-center">No syllabus data found.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Recent Activity -->
+            </div><!-- End Right side columns -->
+
+            <style>
+                .syllabus-cards {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 15px;
+                    margin-top: 10px;
+                }
+
+                .syllabus-card {
+                    background: #f8f9fa;
+                    border-left: 5px solid #007bff;
+                    border-radius: 8px;
+                    padding: 10px;
+                    width: 100%;
+                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s ease-in-out;
+                }
+
+                .syllabus-card:hover {
+                    transform: scale(1.03);
+                    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.15);
+                }
+
+                .syllabus-day {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #007bff;
+                }
+
+                .syllabus-content {
+                    margin-top: 5px;
+                }
+
+                .topic {
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+
+                .trainer {
+                    font-size: 14px;
+                    color: #555;
+                }
+            </style>
+
+    </section>
+</main><!-- End #main -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+{% endblock content %}

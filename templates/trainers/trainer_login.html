@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Login - Aspirant</title>
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md" style="background-color: rgb(92, 114, 133);">
+        <div class="container">
+            <img src="{% static 'img/image.png' %}" alt="Logo" width="80" height="80">
+            <a class="navbar-brand text-white" href="https://www.aspirantiasacademy.in">Aspirant</a>
+        </div>
+    </nav>
+
+    <section class="d-flex align-items-center justify-content-center min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    {% if messages %}
+                    <div class="container mt-3">
+                        {% for message in messages %}
+                        <div class="alert 
+                        {% if message.tags == 'success' %}alert-success
+                        {% elif message.tags == 'error' %}alert-danger
+                        {% elif message.tags == 'warning' %}alert-warning
+                        {% elif message.tags == 'info' %}alert-info
+                        {% endif %}
+                        alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="card shadow-lg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Login to Your Trainer Account</h5>
+                            <form method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" name="username" class="form-control" id="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" id="password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+                                <button class="btn btn-primary w-100" type="submit">Login</button>
+                                <div class="text-center mt-3">
+                                    <p class="small">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-white py-5" style="background-color: rgb(92, 114, 133);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>About Apexa</h5>
+                    <p>Apexa is a tech-based company dedicated to driving innovation through cutting-edge software
+                        solutions and modern digital experiences.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Our Services</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Projects</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Connect With Us</h5>
+                    <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="text-center border-top pt-3 mt-4">
+                <p>&copy; 2024 Apexa. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

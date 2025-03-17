@@ -1,0 +1,81 @@
+{% extends 'teachers/teacher_base.html' %}
+{% block content %}
+{% load static %}
+
+<main id="main" class="main">
+    <div class="container mt-4">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center text-primary mb-4">Mark Attendance</h2>
+
+            <!-- 🔍 Search Bar -->
+            <div class="mb-3">
+                <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search by Register Number..." onkeyup="searchFunction()">
+            </div>
+
+            <form method="POST" action="{% url 'mark_attendance' %}" class="p-3">
+                {% csrf_token %}
+                
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="studentTable">
+                        <thead class="table-primary text-center">
+                            <tr>
+                                <th>Register No</th>
+                                <th>Student Name</th>
+                                <th>Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td class="align-middle text-center reg-no">
+                                    <strong>{{ student.reg_no }}</strong>
+                                </td>
+                                <td class="align-middle">
+                                    <strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <select name="student_{{ student.id }}" class="form-select w-50 mx-auto">
+                                        <option value="present">✅ Present</option>
+                                        <option value="absent">❌ Absent</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-success px-4 py-2 fw-bold">
+                        Submit Attendance
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main><!-- End #main -->
+
+<!-- JavaScript for Search Functionality -->
+<script>
+    function searchFunction() {
+        let input = document.getElementById("searchInput").value.toUpperCase();
+        let table = document.getElementById("studentTable");
+        let rows = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < rows.length; i++) {  // Skip header row
+            let regNoCell = rows[i].getElementsByClassName("reg-no")[0];
+
+            if (regNoCell) {
+                let regNoText = regNoCell.textContent || regNoCell.innerText;
+
+                if (regNoText.toUpperCase().indexOf(input) > -1) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+{% endblock content %}

@@ -1,0 +1,7 @@
+{% for pdf in pdfs %}
+    <h3>{{ pdf.title }}</h3>
+    <p>PDF URL: <a href="{{ pdf.file.url }}" target="_blank">{{ pdf.file.url }}</a></p>
+    <iframe src="{{ pdf.file.url }}" width="100%" height="500px"></iframe>
+    <br>
+    <hr>
+{% endfor %}

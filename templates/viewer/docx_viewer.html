@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure DOCX Viewer</title>
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background: #f9f9f9;
+            text-align: center;
+            padding: 20px;
+        }
+        .content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+            text-align: left;
+        }
+        @media print {
+            body { display: none !important; }
+        }
+    </style>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener("keyup", function (e) {
+            if (e.key === "PrintScreen") {
+                alert("Screenshots are disabled!");
+                navigator.clipboard.writeText("");
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Secure DOCX Viewer</h1>
+    <div class="content">
+        <h2>{{ document.title }}</h2>
+        <p>{{ content|safe }}</p>
+    </div>
+</body>
+</html>
